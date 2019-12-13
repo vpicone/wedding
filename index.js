@@ -15,7 +15,7 @@ const PROJECT_NAME = 'keystone';
 const keystone = new Keystone({
   name: PROJECT_NAME,
   adapter: new Adapter({
-    mongoUri: process.env.MONGO_URI || '',
+    mongoUri: process.env.CUSTOMCONNSTR_MONGO_URI || '',
   }),
 });
 
