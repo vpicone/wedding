@@ -17,7 +17,7 @@ function Profile() {
   if (!data) return <div>loading...</div>;
   return (
     <div>
-      todos:{" "}
+      todosx:{" "}
       <ul>
         {data.allTodos.map((todo: any) => (
           <li>{todo.name}</li>
