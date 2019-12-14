@@ -34,20 +34,35 @@ keystone.createList('Todo', {
   },
 });
 
+const ACTIVE_USER_AND_ADMIN = ({ existingItem, authentication }) =>
+  authentication.item.isAdmin || existingItem.id === authentication.item.id;
+const ADMIN = ({ authentication }) => authentication.item.isAdmin;
+
 keystone.createList('User', {
+  access: ACTIVE_USER_AND_ADMIN,
   fields: {
     name: { type: Text, isRequired: true },
     email: {
       type: Text,
     },
     address: { type: Location, googleMapsKey: process.env.GOOGLE_BROWSER_KEY },
-    isAdmin: { type: Checkbox },
+    isAdmin: {
+      type: Checkbox,
+      access: ADMIN,
+    },
     plusOne: { type: Checkbox },
-    password: { type: Password },
+    password: {
+      type: Password,
+    },
+    vegan: { type: Checkbox },
     status: {
       type: Select,
-      options: 'Pending, Declined, Accepted',
-      defaultValue: 'Pending',
+      options: 'Declined, Accepted',
+    },
+    gift: {
+      type: Select,
+      options: 'Registry, Cash',
+      access: ADMIN,
     },
   },
   labelResolver: item => `${item.name + (item.plusOne ? ' +1' : '')}`,
@@ -65,6 +80,10 @@ const authStrategy = keystone.createAuthStrategy({
 
 module.exports = {
   keystone,
-  apps: [new GraphQLApp(), new AdminUIApp({}), new NextApp({ dir: 'app' })],
+  apps: [
+    new GraphQLApp(),
+    new AdminUIApp({ authStrategy }),
+    new NextApp({ dir: 'app' }),
+  ],
   distDir,
 };
