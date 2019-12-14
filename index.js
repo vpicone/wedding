@@ -18,7 +18,7 @@ const { MongooseAdapter: Adapter } = require('@keystonejs/adapter-mongoose');
 
 const { distDir } = require('./config');
 
-const PROJECT_NAME = 'keystone';
+const PROJECT_NAME = 'Wedding';
 
 const keystone = new Keystone({
   name: PROJECT_NAME,
