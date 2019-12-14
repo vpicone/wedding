@@ -1,5 +1,13 @@
+require('dotenv').config();
+
 const { Keystone } = require('@keystonejs/keystone');
-const { Text, Password, Checkbox, Select } = require('@keystonejs/fields');
+const {
+  Text,
+  Password,
+  Checkbox,
+  Select,
+  Location,
+} = require('@keystonejs/fields');
 const { GraphQLApp } = require('@keystonejs/app-graphql');
 const { AdminUIApp } = require('@keystonejs/app-admin-ui');
 const { NextApp } = require('@keystonejs/app-next');
@@ -32,6 +40,7 @@ keystone.createList('User', {
     email: {
       type: Text,
     },
+    address: { type: Location, googleMapsKey: process.env.GOOGLE_BROWSER_KEY },
     isAdmin: { type: Checkbox },
     plusOne: { type: Checkbox },
     password: { type: Password },

@@ -1,5 +1,5 @@
 # https://docs.docker.com/samples/library/node/
-ARG NODE_VERSION=12.10.0
+ARG NODE_VERSION=12.13.1
 # https://github.com/Yelp/dumb-init/releases
 ARG DUMB_INIT_VERSION=1.2.2
 
@@ -9,11 +9,11 @@ ARG DUMB_INIT_VERSION
 
 WORKDIR /home/node
 
-RUN apk add --no-cache build-base python2 yarn && \
+RUN apk add --no-cache build-base python2 && \
   wget -O dumb-init -q https://github.com/Yelp/dumb-init/releases/download/v${DUMB_INIT_VERSION}/dumb-init_${DUMB_INIT_VERSION}_amd64 && \
   chmod +x dumb-init
 ADD . /home/node
-RUN yarn install && yarn build && yarn cache clean
+RUN yarn install --production && yarn build && yarn cache clean
 
 # Runtime container
 FROM node:${NODE_VERSION}-alpine

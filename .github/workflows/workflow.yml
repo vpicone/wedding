@@ -1,7 +1,0 @@
-az acr task create \
---registry $ACR_NAME \
---name taskwedding \
---image wedding:latest \
---context https://github.com/vpicone/wedding.git \
---file Dockerfile \
---git-access-token $GIT_PAT
